@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Joole.Service.Models.User>
+@using Joole.Service.Models
+@{
+    ViewBag.Title = "UserList";
+}
+
+<h2>UserList</h2>
+
+<table border="1" style="border-collapse : collapse">
+    <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Password</th>
+        <th>User Email</th>
+    </tr>
+
+    @foreach (User user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Name</td>
+            <td>@user.Password</td>
+            <td>@user.Email</td>
+        </tr>
+
+    }
+
+
+</table>
