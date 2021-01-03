@@ -12,6 +12,7 @@
         <th>User Name</th>
         <th>User Password</th>
         <th>User Email</th>
+        <th>User Image</th>
     </tr>
 
     @foreach (User user in Model)
@@ -21,6 +22,14 @@
             <td>@user.Name</td>
             <td>@user.Password</td>
             <td>@user.Email</td>
+            @if (user.Image != null)
+            {
+                <td><img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(user.Image))" width="50" height="50"/></td>
+            }
+            else { 
+                <td>@user.Image</td>
+            }
+
         </tr>
 
     }

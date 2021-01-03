@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="Category_ID" />
           </Key>
-          <Property Name="Category_ID" Type="int" Nullable="false" />
+          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Category_Name" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="tblManufacture">
           <Key>
             <PropertyRef Name="Manufacture_ID" />
           </Key>
-          <Property Name="Manufacture_ID" Type="int" Nullable="false" />
+          <Property Name="Manufacture_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Manufacture_Name" Type="varchar" MaxLength="20" />
           <Property Name="User_ID" Type="int" />
         </EntityType>
@@ -24,21 +24,20 @@
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
-          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Manufacture_ID" Type="int" Nullable="false" />
           <Property Name="SubCategory_ID" Type="int" Nullable="false" />
           <Property Name="Product_Name" Type="varchar" MaxLength="20" />
           <Property Name="Product_Image" Type="image" />
           <Property Name="Series" Type="varchar" MaxLength="30" />
           <Property Name="Model" Type="varchar" MaxLength="30" />
-          <Property Name="Model_Year" Type="int" />
         </EntityType>
         <EntityType Name="tblProperty">
           <Key>
             <PropertyRef Name="Property_ID" />
           </Key>
-          <Property Name="Property_ID" Type="int" Nullable="false" />
-          <Property Name="Property_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Property_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Property_Name" Type="varchar" MaxLength="40" />
           <Property Name="IsType" Type="bit" />
           <Property Name="IsTechSpec" Type="bit" />
         </EntityType>
@@ -51,13 +50,13 @@ warning 6002: The table/view 'Joole_Project.dbo.tblPropertyValue' does not have 
           </Key>
           <Property Name="Property_ID" Type="int" Nullable="false" />
           <Property Name="Product_ID" Type="int" Nullable="false" />
-          <Property Name="Value" Type="varchar" MaxLength="20" />
+          <Property Name="Value" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="tblSubCategory">
           <Key>
             <PropertyRef Name="SubCategory_ID" />
           </Key>
-          <Property Name="SubCategory_ID" Type="int" Nullable="false" />
+          <Property Name="SubCategory_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Category_ID" Type="int" />
           <Property Name="SubCategory_Name" Type="varchar" MaxLength="20" />
         </EntityType>
@@ -89,11 +88,11 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Name" Type="varchar" MaxLength="20" />
           <Property Name="User_Email" Type="varchar" MaxLength="30" />
           <Property Name="User_Password" Type="varchar" MaxLength="30" />
-          <Property Name="User_Image" Type="image" />
+          <Property Name="User_Image" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK__tblManufa__User___276EDEB3">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
@@ -295,7 +294,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="Category_ID" />
           </Key>
-          <Property Name="Category_ID" Type="Int32" Nullable="false" />
+          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Category_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblSubCategories" Relationship="Self.FK__tblSubCat__Categ__2C3393D0" FromRole="tblCategory" ToRole="tblSubCategory" />
         </EntityType>
@@ -303,7 +302,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="Manufacture_ID" />
           </Key>
-          <Property Name="Manufacture_ID" Type="Int32" Nullable="false" />
+          <Property Name="Manufacture_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Manufacture_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="User_ID" Type="Int32" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK__tblManufa__User___276EDEB3" FromRole="tblManufacture" ToRole="tblUser" />
@@ -313,14 +312,13 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Manufacture_ID" Type="Int32" Nullable="false" />
           <Property Name="SubCategory_ID" Type="Int32" Nullable="false" />
           <Property Name="Product_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Product_Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Series" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Model" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Model_Year" Type="Int32" />
           <NavigationProperty Name="tblManufacture" Relationship="Self.FK__tblProduc__Manuf__2F10007B" FromRole="tblProduct" ToRole="tblManufacture" />
           <NavigationProperty Name="tblSubCategory" Relationship="Self.FK__tblProduc__SubCa__300424B4" FromRole="tblProduct" ToRole="tblSubCategory" />
           <NavigationProperty Name="tblPropertyValues" Relationship="Self.FK__tblProper__Produ__34C8D9D1" FromRole="tblProduct" ToRole="tblPropertyValue" />
@@ -329,8 +327,8 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="Property_ID" />
           </Key>
-          <Property Name="Property_ID" Type="Int32" Nullable="false" />
-          <Property Name="Property_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Property_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Property_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IsType" Type="Boolean" />
           <Property Name="IsTechSpec" Type="Boolean" />
           <NavigationProperty Name="tblPropertyValues" Relationship="Self.FK__tblProper__Prope__33D4B598" FromRole="tblProperty" ToRole="tblPropertyValue" />
@@ -341,7 +339,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="SubCategory_ID" />
           </Key>
-          <Property Name="SubCategory_ID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategory_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Category_ID" Type="Int32" />
           <Property Name="SubCategory_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblCategory" Relationship="Self.FK__tblSubCat__Categ__2C3393D0" FromRole="tblSubCategory" ToRole="tblCategory" />
@@ -353,7 +351,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="User_Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="User_Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
@@ -367,7 +365,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           </Key>
           <Property Name="Property_ID" Type="Int32" Nullable="false" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblProduct" Relationship="Self.FK__tblProper__Produ__34C8D9D1" FromRole="tblPropertyValue" ToRole="tblProduct" />
           <NavigationProperty Name="tblProperty" Relationship="Self.FK__tblProper__Prope__33D4B598" FromRole="tblPropertyValue" ToRole="tblProperty" />
         </EntityType>
@@ -599,7 +597,6 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
                 <ScalarProperty Name="Product_Image" ColumnName="Product_Image" />
                 <ScalarProperty Name="Series" ColumnName="Series" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="Model_Year" ColumnName="Model_Year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

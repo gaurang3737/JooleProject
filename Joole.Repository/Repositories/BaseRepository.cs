@@ -10,12 +10,12 @@ namespace Joole.Repository.Repositories
     public interface IRepsitory<TEntity> where TEntity : class {
         TEntity GetByID(int id);
         IEnumerable<TEntity> GetAll();
-
+        
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
 
 
-        void Delete(TEntity entitry);
+        void Delete(TEntity entity);
         void DeleteRange(IEnumerable<TEntity> entities);
 
         void Update(TEntity entity);

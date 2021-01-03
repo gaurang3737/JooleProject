@@ -27,7 +27,6 @@ namespace Joole.DAL
         public byte[] Product_Image { get; set; }
         public string Series { get; set; }
         public string Model { get; set; }
-        public Nullable<int> Model_Year { get; set; }
     
         public virtual tblManufacture tblManufacture { get; set; }
         public virtual tblSubCategory tblSubCategory { get; set; }

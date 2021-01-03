@@ -8,6 +8,7 @@ using Joole.Repository;
 using Joole.Service.Models;
 using System.Data.Entity;
 using System.Data;
+using Joole.Repository.Repositories;
 
 namespace Joole.Service
 {
@@ -28,6 +29,21 @@ namespace Joole.Service
             return false;
         }
 
+        public void Submit_User(string username, string email, string password, byte[] b)
+        {
+            var dataset = uow.users.GetAll();
+            var count = dataset.Count()+1;
+            tblUser user = new tblUser();
+            user.User_ID = count;
+            user.User_Name = username;
+            user.User_Email = email;
+            user.User_Password = password;
+            user.User_Image = b;
+            context.tblUsers.Add(user);
+            context.SaveChanges();
+        }
+
+
         public List<User> GetUserList() {
 
             var dataset = uow.users.GetAll();
@@ -44,6 +60,7 @@ namespace Joole.Service
             }
             return users;
         }
+
     }
 
     //public class JooleContext : JooleDBEntities {
