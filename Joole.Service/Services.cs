@@ -62,10 +62,4 @@ namespace Joole.Service
         }
 
     }
-
-    //public class JooleContext : JooleDBEntities {
-    //    public JooleContext() { 
-            
-    //    }
-    //}
 }

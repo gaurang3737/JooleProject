@@ -24,7 +24,7 @@
             <td>@user.Email</td>
             @if (user.Image != null)
             {
-                <td><img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(user.Image))" width="50" height="50"/></td>
+                <td><img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(user.Image))"/></td>
             }
             else { 
                 <td>@user.Image</td>
