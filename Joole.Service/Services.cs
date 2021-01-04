@@ -61,5 +61,11 @@ namespace Joole.Service
             return users;
         }
 
+        //public List<Product> GetProductByID(int id)
+        public int GetProductByID(int id)
+        {
+            var data = uow.products.GetAll();
+            return data.Count();
+        }
     }
 }
