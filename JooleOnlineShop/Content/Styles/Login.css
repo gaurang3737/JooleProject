@@ -1,13 +1,4 @@
-﻿html {
-    height: 100%;
-}
-
-body {
-    width: 100%;
-    background-image: linear-gradient(#1565c0,white);
-}
-
-#input_container {
+﻿#input_container {
     position: absolute;
     top: 20%;
     left: 20%;
