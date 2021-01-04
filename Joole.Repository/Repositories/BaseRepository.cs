@@ -4,22 +4,22 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Joole.Repository.Repositories
 {
     public interface IRepsitory<TEntity> where TEntity : class {
         TEntity GetByID(int id);
         IEnumerable<TEntity> GetAll();
-        
+
+        IEnumerable<TEntity> Find(Expression<Func<TEntity,bool>> predicate);
+
         void Insert(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
 
 
         void Delete(TEntity entity);
         void DeleteRange(IEnumerable<TEntity> entities);
-
-        void Update(TEntity entity);
-
     }
 
     public class BaseRepositroy<TEntity> : IRepsitory<TEntity> where TEntity : class{
@@ -38,6 +38,10 @@ namespace Joole.Repository.Repositories
             return Context.Set<TEntity>().ToList();
         }
 
+        {
+            return Context.Set<TEntity>().Where(predicate);
+        }
+
         public void Delete(TEntity entity ){
             Context.Set<TEntity>().Remove(entity); 
         }
@@ -54,13 +58,6 @@ namespace Joole.Repository.Repositories
         void IRepsitory<TEntity>.InsertRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);
-        }
-
-        void IRepsitory<TEntity>.Update(TEntity entity)
-        { 
-
-            // base on business logic
-
         }
     }
 }

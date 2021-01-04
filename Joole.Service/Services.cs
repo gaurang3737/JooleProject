@@ -61,11 +61,12 @@ namespace Joole.Service
             return users;
         }
 
-        //public List<Product> GetProductByID(int id)
-        public int GetProductByID(int id)
+        public (List<tblProduct>,List<String>) GetProductBySubCategoryID(int id)
         {
-            var data = uow.products.GetAll();
-            return data.Count();
+            //List<tblProduct> prodlist = new List<tblProduct>();
+            //List<string> man_list = new List<string>();
+            //(prodlist, man_list) = uow.products.find_man(id);
+            return ((List<tblProduct>, List<string>))uow.products.find_man(id);
         }
     }
 }

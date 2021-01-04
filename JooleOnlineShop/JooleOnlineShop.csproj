@@ -194,6 +194,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Joole.DAL\Joole.DAL.csproj">
+      <Project>{AD4663D2-1702-46FB-93B6-1436FD19E3CB}</Project>
+      <Name>Joole.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Joole.Service\Joole.Service.csproj">
       <Project>{9e710060-6977-4252-9240-372368cd0d25}</Project>
       <Name>Joole.Service</Name>

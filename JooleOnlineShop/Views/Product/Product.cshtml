@@ -2,17 +2,50 @@
 @{
     Layout = null;
 }
-
+@{ ViewBag.Title = "UserList"; }
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--Applied Common CSS-->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div>
-        @ViewBag.count
+    <div class="container">
+        <h2>Card Deck</h2>
+        <div class="card-deck">
+            @{var count = 0;}
+            @foreach (var p in ViewBag.prod_data)
+            {
+            <div class="card" style="width: 18rem;">
+                @if (p.Product_Image != null)
+                {
+                    <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="300">
+                }
+                else
+                {
+                    <img class="card-img-top" src="#" alt="Card image cap" width="100" height="300">
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">@p.Product_Name</h5>
+                    <p class="card-text">@ViewBag.man_data[count]</p>
+                    <p class="card-text">@p.Series</p>
+                    <p class="card-text">@p.Model</p>
+                    <a href="#" class="btn btn-primary">Compare</a>
+                </div>
+            </div>
+                count = count + 1;
+            }
+        </div>
     </div>
 </body>
 </html>
