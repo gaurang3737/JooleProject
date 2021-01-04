@@ -1,0 +1,74 @@
+﻿html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    background-image: linear-gradient(#1565c0,white);
+}
+
+#input_container {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    margin-top: -20px;
+    margin-left: -100px;
+}
+
+#username, #password {
+    height: 20px;
+    margin: 0;
+    padding-right: 30px;
+    width: 350px;
+}
+
+#input_img {
+    position: relative;
+    top: 4px;
+    right: 5px;
+    width: 5px;
+    height: 5px;
+}
+
+#btn1 {
+    position: absolute;
+    right: 35%;
+    bottom: 5px;
+    background-color: darkblue;
+    color: white;
+}
+
+#btn2 {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: black;
+    position: absolute;
+    right: 30px;
+}
+
+.circle {
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+.img-responsive {
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    margin-left: -25px;
+}
+
+#myModal {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    margin: 0 auto;
+}
