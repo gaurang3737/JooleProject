@@ -1,0 +1,137 @@
+﻿@model IEnumerable<Joole.Service.Models.Product>
+@using Joole.Service.Models
+@{ Layout = null;
+    ViewBag.Title = "ProductList"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product Details</title>
+    <style>
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <h2 style="color:dodgerblue;">Product Summary</h2>
+    <hr>
+
+    <div id="divwrapper">
+        <div style="float:left;">
+            <table border="1" style="border-collapse : collapse">
+                <tr>
+                    <th colspan="2">Description</th>
+
+                    <!-- <th>SubCategory ID</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>-->
+                </tr>
+
+                @foreach (List<string> item in (List<List<string>>)ViewBag.Man)
+                {
+                    <tr>
+                        <th style="background-color:lightslategrey;">Manufacture</th>
+                        <td>@item[1]</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color:lightslategrey;">Series</th>
+                        <td>@item[2]</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color:lightslategrey;">Model</th>
+                        <td>@item[3]</td>
+                    </tr>
+
+                }
+
+
+            </table>
+        </div>
+
+        <div style="float:left;">
+            <table border="1" style="border-collapse : collapse">
+                <tr>
+                    <th colspan="2">Technical Specifications</th>
+                    <!-- <th>SubCategory ID</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>-->
+
+                </tr>
+                @foreach (List<string> item in (List<List<string>>)ViewBag.IsTechSpec)
+                {
+                    <tr>
+                        <th style="background-color:lightslategrey;">@item[0]</th>
+                        @if (item[1].Split(',').Length == 2)
+                        {
+                            <td>
+                                <table>
+                                    <tr><td style="background-color:lightslategrey;">Min</td><td style="width:50px">@item[1].Split(',')[0]</td><td style="background-color:lightslategrey;">Max</td><td style="width:15px">@item[1].Split(',')[1]</td></tr>
+                                </table>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@item[1].Split(',')[0]</td>
+                        }
+
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+   
+
+    <div>
+        <table border="1" style="border-collapse : collapse">
+            <tr>
+                <th colspan="2">Type</th>
+                <!-- <th>SubCategory ID</th>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Value</th>-->
+            </tr>
+            @foreach (List<string> item in (List<List<string>>)ViewBag.IsType)
+            {
+                <tr>
+                    <th style="background-color:lightslategrey;">@item[0]</th>
+                    <td>@item[1]</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+</body>
+</html>

@@ -9,13 +9,15 @@ using Joole.DAL;
 namespace Joole.Repository.Repositories
 {
 
-    public interface IProductRepo : IRepsitory<tblProduct> { 
+    public interface IManufactureRepo : IRepsitory<tblManufacture>
+    {
         // define sepcific methods
     }
-    public class ProductRepo : BaseRepositroy<tblProduct>, IProductRepo
+    public class ManufactureRepo : BaseRepositroy<tblManufacture>, IManufactureRepo
     {
-        public ProductRepo(DbContext context) : base(context) { 
-           
+        public ManufactureRepo(DbContext context) : base(context)
+        {
+
         }
 
         // implement methonds

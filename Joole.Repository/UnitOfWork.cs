@@ -14,11 +14,17 @@ namespace Joole.Repository
         DbContext Context;
         public IProductRepo products;
         public IUserRepo users;
+        public IPropertyValueRepo propertyvalues;
+        public IPropertyRepo properties;
+        public IManufactureRepo manufactures;
 
         public UnitOfWork(DbContext context) {
             Context = context;
             products = new ProductRepo(context);
             users = new UserRepo(context);
+            propertyvalues = new PropertyValueRepo(context);
+            properties = new PropertyRepo(context);
+            manufactures = new ManufactureRepo(context);
         }
 
         public void SaveChanges() {
