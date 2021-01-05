@@ -16,9 +16,11 @@ namespace JooleOnlineShop.Controllers
             Services serv = new Services();
             List<tblProduct> prodlist = new List<tblProduct>();
             List<String> man_list = new List<string>();
-            (prodlist, man_list) = serv.GetProductBySubCategoryID(id);
+            List<List<String>> props_value_list = new List<List<String>>();
+           (prodlist, man_list, props_value_list) = serv.GetProductBySubCategoryID(id);
             ViewBag.prod_data = prodlist;
             ViewBag.man_data = man_list;
+            ViewBag.props_data = props_value_list;
             return View("Product");
         }
     }

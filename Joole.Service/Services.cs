@@ -61,12 +61,9 @@ namespace Joole.Service
             return users;
         }
 
-        public (List<tblProduct>,List<String>) GetProductBySubCategoryID(int id)
+        public (List<tblProduct>,List<String>, List<List<String>>) GetProductBySubCategoryID(int sub_category_id)
         {
-            //List<tblProduct> prodlist = new List<tblProduct>();
-            //List<string> man_list = new List<string>();
-            //(prodlist, man_list) = uow.products.find_man(id);
-            return ((List<tblProduct>, List<string>))uow.products.find_man(id);
+            return ((List<tblProduct>, List<string>, List<List<String>>))uow.products.FindAllProducts(sub_category_id);
         }
     }
 }
