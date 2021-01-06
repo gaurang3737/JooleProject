@@ -13,13 +13,24 @@ namespace JooleOnlineShop.Controllers
     {
         //Get From Search
         [HttpGet]
-        public ActionResult Product(string categoryId, string subcategoryId)
+        public ActionResult Product(string categoryId = "null", string subcategoryId = "null")
         {
             if (HttpContext.Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
 
+            //Set Category and SubCategory ids as sessions
+            if(categoryId != "null")
+            {
+                HttpContext.Session["cat_id"] = categoryId;
+                HttpContext.Session["sub_cat_id"] = subcategoryId;
+            }
+            else
+            {
+                categoryId = (string)HttpContext.Session["cat_id"];
+                subcategoryId = (string)HttpContext.Session["sub_cat_id"];
+            }
             TempData["img"] = HttpContext.Session["user_img"];
 
             int sub_id = Int32.Parse(subcategoryId);
@@ -35,12 +46,16 @@ namespace JooleOnlineShop.Controllers
             ViewBag.prod_data = prodlist;
             ViewBag.man_data = man_list;
             ViewBag.props_data = props_value_list;
+
+            //Setting session for compare page 
+            HttpContext.Session["cat_name"] = ViewBag.cat_name;
+            HttpContext.Session["sub_cat_name"] = ViewBag.sub_cat_name;
             return View("Product", categories);
         }
 
         //GET Product Details
         [HttpGet]
-        public ActionResult ProductList(int pid)
+        public ActionResult ProductList(int pid = 1)
         {
             if (HttpContext.Session["username"] == null)
             {
@@ -98,6 +113,9 @@ namespace JooleOnlineShop.Controllers
                 ViewBag.Compare2 = 0;
             }
             List<Category> categories = service.GetCategoryList();//for top-search bar
+
+            ViewBag.cat_name = HttpContext.Session["cat_name"];
+            ViewBag.sub_cat_name = HttpContext.Session["sub_cat_name"];
             return View("CompareProducts", categories);
         }
         

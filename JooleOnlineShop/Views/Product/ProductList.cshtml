@@ -196,7 +196,8 @@
                     </div>
                 </header>
     </div>
-    <h2 style="color:dodgerblue;">Product Summary</h2>
+    <a href="/Product/Product" style="text-decoration:none; font-size:large; margin-left:1%;">Products</a>
+    <h2 style="color:dodgerblue; margin-left:1%;">Product Summary</h2>
     <hr>
 
     <div class="flex-container">
@@ -204,10 +205,6 @@
             <table style="border: 1px;border-collapse:collapse; width: 500px; height: 50%">
                 <tr style="border: 1px solid lightgray;border-right: 0;">
                     <th colspan="2">Description</th>
-
-                    <!-- <th>SubCategory ID</th>
-                    <th>Product Name</th>
-                    <th>Product Image</th>-->
                 </tr>
 
                 @foreach (List<string> item in (List<List<string>>)ViewBag.Man)
