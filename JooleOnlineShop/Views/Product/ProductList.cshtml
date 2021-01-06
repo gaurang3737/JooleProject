@@ -1,0 +1,137 @@
+﻿@{ Layout = null;
+    ViewBag.Title = "Product Details"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Joole - @ViewBag.Title</title>
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            height: 500px;
+            padding: 20px;
+        }
+
+        .flex-child {
+            flex: 1;
+            border: none;
+        }
+
+        th, tr, td {
+            text-align: left;
+            padding-left: 10px;
+        }
+        th{
+            width:40%;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 bg-primary" style="height:80px;text-align:center;background-image:linear-gradient(#1565c0,white);">
+                Top
+                @Html.ActionLink("Logout", "Logout", "Product")
+            </div>
+        </div>
+
+    </div>
+
+
+    <h2 style="color:dodgerblue;">Product Summary</h2>
+    <hr>
+
+    <div class="flex-container">
+        <div>
+            <table style="border: 1px;border-collapse:collapse; width: 500px; height: 50%">
+                <tr style="border: 1px solid lightgray;border-right: 0;">
+                    <th colspan="2">Description</th>
+
+                    <!-- <th>SubCategory ID</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>-->
+                </tr>
+
+                @foreach (List<string> item in (List<List<string>>)ViewBag.Man)
+                {
+                    <tr style="border-bottom: 1px inset lightgray;">
+                        <th style="background-color:lightgray;">Manufacture</th>
+                        <td>@item[1]</td>
+                    </tr>
+                    <tr style="border-bottom: 1px inset lightgray;">
+                        <th style="background-color:lightgray;">Series</th>
+                        <td>@item[2]</td>
+                    </tr>
+                    <tr style="border-bottom: 1px inset lightgray;">
+                        <th style="background-color:lightgray;">Model</th>
+                        <td>@item[3]</td>
+                    </tr>
+
+                }
+
+
+            </table>
+
+            <br><br><br>
+
+            <div>
+                <table style="border: 1px;border-collapse: collapse; width: 100%; height: 200px;">
+                    <tr style="border: 1px solid lightgray; border-right: 0;">
+                        <th colspan="2">Type</th>
+                        <!-- <th>SubCategory ID</th>
+                        <th>Product Name</th>
+                        <th>Product Image</th>
+                        <th>Value</th>-->
+                    </tr>
+                    @foreach (List<string> item in (List<List<string>>)ViewBag.IsType)
+                    {
+                        <tr style="border-bottom: 1px inset lightgray;">
+                            <th style="background-color:lightgray;">@item[0]</th>
+                            <td>@item[1]</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+        </div>
+
+        <div class="flex-child">
+            <table style="border: 1px;border-collapse: collapse; width: 100%; height: 100%; margin-left:10%;">
+                <tr style="border: 1px solid lightgray; border-right: 0;">
+                    <th colspan="2">Technical Specifications</th>
+                    <!-- <th>SubCategory ID</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>-->
+
+                </tr>
+                @foreach (List<string> item in (List<List<string>>)ViewBag.IsTechSpec)
+                {
+            <tr style="border-bottom: 1px inset lightgray;">
+                <th style="background-color:lightgray;">@item[0]</th>
+                @if (item[1].Split(',').Length == 2)
+                {
+                     <th style="background-color:lightgray; width:10%">Min</th><td style="width:50px">@item[1].Split(',')[0]</td>
+                     <th style="background-color:lightgray; width:10%">Max</th><td style="width:15px">@item[1].Split(',')[1]</td>
+                }
+                else
+                {
+                    <td>@item[1].Split(',')[0]</td>
+                }
+
+
+            </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+
+</body>
+</html>

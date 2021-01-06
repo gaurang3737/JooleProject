@@ -49,6 +49,11 @@
     font-weight:bolder;
 }
 
+a.prod-link,
+a.prod-link:hover {
+    color: inherit;
+}
+
 @media (max-width: 47em) {
     .card-columns {
         -webkit-column-count: 1;

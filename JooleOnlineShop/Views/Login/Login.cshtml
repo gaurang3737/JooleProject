@@ -9,7 +9,7 @@ ViewBag.Title = "Login";
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Building Product Selection Platform</title>
+    <title>Joole - @ViewBag.Title</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -48,7 +48,14 @@ ViewBag.Title = "Login";
     </script>
 </head>
 <body>
-
+    @if (ViewBag.message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.message")
+            }
+        </script>
+    }
     <a class="btn btn-primary" data-target="#myModal" data-toggle="modal" href="#myModal" id="btn2">Sign Up</a>
 
 
@@ -103,7 +110,7 @@ ViewBag.Title = "Login";
                                 var loadFile = function (event) {
                                     var image = document.getElementById('output');
                                     image.src = URL.createObjectURL(event.target.files[0]);
-                                    
+
                                 };
                             </script>
                             <label>Your Profile Pic</label><br>
@@ -133,7 +140,7 @@ ViewBag.Title = "Login";
                         </div>
                     </form>
                 </div>
-                
+
             </div>
 
         </div>

@@ -1,15 +1,14 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-@{ ViewBag.Title = "UserList"; }
+@{ ViewBag.Title = "Product Summary"; }
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Joole - @ViewBag.Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -23,43 +22,52 @@
 <body>
     <div class="layer">
         <div class="toppane">
-            <center><h1>Search Here</h1></center>
+            <center><h1>Search Here @Html.ActionLink("Logout", "Logout", "Product") </h1></center>
+            
         </div>
         <div class="leftpane">
             <center><h1>Filter Here</h1></center>
         </div>
         <div class="middlepane">
             <div class="container">
-                <h5>Mechanical > Fan</h5>
+                <h5>@ViewBag.cat_name > @ViewBag.sub_cat_name</h5>
                 <div class="card-columns">
                     @{var count = 0;}
-                    @foreach (var p in ViewBag.prod_data)
+                    @if (ViewBag.prod_data != null)
                     {
-                        <div class="card" style="width: 15rem; height: 30rem;">
-                            @if (p.Product_Image != null)
-                            {
-                                <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="200">
-                            }
-                            else
-                            {
-                                <img class="card-img-top" src="#" alt="Card image cap" width="100">
-                            }
+                        foreach(var p in ViewBag.prod_data)
+                        {
+                            <div class="card" style="width: 15rem; height: 30rem;">
+                                @if (p.Product_Image != null)
+                                {
+                                    <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="200">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="#" alt="Card image cap" width="100">
+                                }
 
-                        <div class="card-body">
-                            <div class="heading">
-                                <p>@p.Product_Name</p>
-                                <p>@ViewBag.man_data[count]</p>
-                                <p>@p.Series</p>
-                                <p>@p.Model</p>
-                            </div>
-                            <p>@ViewBag.props_data[count][0].Split(':')[1] @ViewBag.props_data[count][0].Split(':')[0]</p>
-                            <p>@ViewBag.props_data[count][1].Split(':')[1].Split(',')[1] @ViewBag.props_data[count][1].Split(':')[0]</p>
-                            <p>@ViewBag.props_data[count][2].Split(':')[1] @ViewBag.props_data[count][2].Split(':')[0]</p>
-                            <p>@ViewBag.props_data[count][3].Split(':')[1] @ViewBag.props_data[count][3].Split(':')[0]</p>
-                            <a href="#" class="btn btn-primary">Compare</a>
-                        </div>
-                        </div>
-                        count = count + 1;
+                                <div class="card-body">
+                                    <div class="heading">
+                                        <p>@p.Product_Name</p>
+                                        <p>@ViewBag.man_data[count]</p>
+                                        <p>@p.Series</p>
+                                        <p>@p.Model</p>
+                                    </div>
+                                    <p>@ViewBag.props_data[count][0].Split(':')[1] @ViewBag.props_data[count][0].Split(':')[0]</p>
+                                    <p>@ViewBag.props_data[count][1].Split(':')[1].Split(',')[1] @ViewBag.props_data[count][1].Split(':')[0]</p>
+                                    <p>@ViewBag.props_data[count][2].Split(':')[1] @ViewBag.props_data[count][2].Split(':')[0]</p>
+                                    <p>@ViewBag.props_data[count][3].Split(':')[1] @ViewBag.props_data[count][3].Split(':')[0]</p>
+                                    <!--Link to Details-->
+                                    <a href="/Product/ProductList?pid=@p.Product_ID" class="stretched-link"></a>
+                                </div>
+                           </div>
+                            count = count + 1;
+                        }
+                    }
+                    else
+                    {
+                        <p>No Products found!</p>
                     }
                 </div>
             </div>

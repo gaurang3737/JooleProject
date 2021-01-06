@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JooleDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JooleDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblCategory">
           <Key>
             <PropertyRef Name="Category_ID" />
@@ -28,7 +28,7 @@
           <Property Name="Manufacture_ID" Type="int" Nullable="false" />
           <Property Name="SubCategory_ID" Type="int" Nullable="false" />
           <Property Name="Product_Name" Type="varchar" MaxLength="20" />
-          <Property Name="Product_Image" Type="image" />
+          <Property Name="Product_Image" Type="varbinary(max)" />
           <Property Name="Series" Type="varchar" MaxLength="30" />
           <Property Name="Model" Type="varchar" MaxLength="30" />
         </EntityType>
@@ -94,7 +94,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
           <Property Name="User_Password" Type="varchar" MaxLength="30" />
           <Property Name="User_Image" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK__tblManufa__User___276EDEB3">
+        <Association Name="FK__tblManufa__User___42E1EEFE">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblManufacture" Type="Self.tblManufacture" Multiplicity="*" />
           <ReferentialConstraint>
@@ -106,7 +106,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblProduc__Manuf__2F10007B">
+        <Association Name="FK__tblProduc__Manuf__4A8310C6">
           <End Role="tblManufacture" Type="Self.tblManufacture" Multiplicity="1" />
           <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -118,7 +118,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblProduc__SubCa__300424B4">
+        <Association Name="FK__tblProduc__SubCa__4B7734FF">
           <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
           <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -130,7 +130,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblProper__Produ__34C8D9D1">
+        <Association Name="FK__tblProper__Produ__503BEA1C">
           <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="1" />
           <End Role="tblPropertyValue" Type="Self.tblPropertyValue" Multiplicity="*" />
           <ReferentialConstraint>
@@ -142,7 +142,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblProper__Prope__33D4B598">
+        <Association Name="FK__tblProper__Prope__4F47C5E3">
           <End Role="tblProperty" Type="Self.tblProperty" Multiplicity="1" />
           <End Role="tblPropertyValue" Type="Self.tblPropertyValue" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +154,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblSubCat__Categ__2C3393D0">
+        <Association Name="FK__tblSubCat__Categ__47A6A41B">
           <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="0..1" />
           <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,7 +166,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblTechSp__Prope__3B75D760">
+        <Association Name="FK__tblTechSp__Prope__56E8E7AB">
           <End Role="tblProperty" Type="Self.tblProperty" Multiplicity="1" />
           <End Role="tblTechSpecFilter" Type="Self.tblTechSpecFilter" Multiplicity="*" />
           <ReferentialConstraint>
@@ -178,7 +178,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblTechSp__SubCa__3C69FB99">
+        <Association Name="FK__tblTechSp__SubCa__57DD0BE4">
           <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
           <End Role="tblTechSpecFilter" Type="Self.tblTechSpecFilter" Multiplicity="*" />
           <ReferentialConstraint>
@@ -190,7 +190,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblTypeFi__Prope__37A5467C">
+        <Association Name="FK__tblTypeFi__Prope__531856C7">
           <End Role="tblProperty" Type="Self.tblProperty" Multiplicity="1" />
           <End Role="tblTypeFilter" Type="Self.tblTypeFilter" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +202,7 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__tblTypeFi__SubCa__38996AB5">
+        <Association Name="FK__tblTypeFi__SubCa__540C7B00">
           <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
           <End Role="tblTypeFilter" Type="Self.tblTypeFilter" Multiplicity="*" />
           <ReferentialConstraint>
@@ -244,49 +244,48 @@ warning 6002: The table/view 'Joole_Project.dbo.tblTypeFilter' does not have a p
     [tblTypeFilter].[Type_Value] AS [Type_Value]
     FROM [dbo].[tblTypeFilter] AS [tblTypeFilter]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__tblManufa__User___276EDEB3" Association="Self.FK__tblManufa__User___276EDEB3">
+          <AssociationSet Name="FK__tblManufa__User___42E1EEFE" Association="Self.FK__tblManufa__User___42E1EEFE">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblManufacture" EntitySet="tblManufacture" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblProduc__Manuf__2F10007B" Association="Self.FK__tblProduc__Manuf__2F10007B">
+          <AssociationSet Name="FK__tblProduc__Manuf__4A8310C6" Association="Self.FK__tblProduc__Manuf__4A8310C6">
             <End Role="tblManufacture" EntitySet="tblManufacture" />
             <End Role="tblProduct" EntitySet="tblProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblProduc__SubCa__300424B4" Association="Self.FK__tblProduc__SubCa__300424B4">
+          <AssociationSet Name="FK__tblProduc__SubCa__4B7734FF" Association="Self.FK__tblProduc__SubCa__4B7734FF">
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
             <End Role="tblProduct" EntitySet="tblProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblProper__Produ__34C8D9D1" Association="Self.FK__tblProper__Produ__34C8D9D1">
+          <AssociationSet Name="FK__tblProper__Produ__503BEA1C" Association="Self.FK__tblProper__Produ__503BEA1C">
             <End Role="tblProduct" EntitySet="tblProduct" />
             <End Role="tblPropertyValue" EntitySet="tblPropertyValue" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblProper__Prope__33D4B598" Association="Self.FK__tblProper__Prope__33D4B598">
+          <AssociationSet Name="FK__tblProper__Prope__4F47C5E3" Association="Self.FK__tblProper__Prope__4F47C5E3">
             <End Role="tblProperty" EntitySet="tblProperty" />
             <End Role="tblPropertyValue" EntitySet="tblPropertyValue" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblSubCat__Categ__2C3393D0" Association="Self.FK__tblSubCat__Categ__2C3393D0">
+          <AssociationSet Name="FK__tblSubCat__Categ__47A6A41B" Association="Self.FK__tblSubCat__Categ__47A6A41B">
             <End Role="tblCategory" EntitySet="tblCategory" />
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblTechSp__Prope__3B75D760" Association="Self.FK__tblTechSp__Prope__3B75D760">
+          <AssociationSet Name="FK__tblTechSp__Prope__56E8E7AB" Association="Self.FK__tblTechSp__Prope__56E8E7AB">
             <End Role="tblProperty" EntitySet="tblProperty" />
             <End Role="tblTechSpecFilter" EntitySet="tblTechSpecFilter" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblTechSp__SubCa__3C69FB99" Association="Self.FK__tblTechSp__SubCa__3C69FB99">
+          <AssociationSet Name="FK__tblTechSp__SubCa__57DD0BE4" Association="Self.FK__tblTechSp__SubCa__57DD0BE4">
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
             <End Role="tblTechSpecFilter" EntitySet="tblTechSpecFilter" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblTypeFi__Prope__37A5467C" Association="Self.FK__tblTypeFi__Prope__37A5467C">
+          <AssociationSet Name="FK__tblTypeFi__Prope__531856C7" Association="Self.FK__tblTypeFi__Prope__531856C7">
             <End Role="tblProperty" EntitySet="tblProperty" />
             <End Role="tblTypeFilter" EntitySet="tblTypeFilter" />
           </AssociationSet>
-          <AssociationSet Name="FK__tblTypeFi__SubCa__38996AB5" Association="Self.FK__tblTypeFi__SubCa__38996AB5">
+          <AssociationSet Name="FK__tblTypeFi__SubCa__540C7B00" Association="Self.FK__tblTypeFi__SubCa__540C7B00">
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
             <End Role="tblTypeFilter" EntitySet="tblTypeFilter" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JooleDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">

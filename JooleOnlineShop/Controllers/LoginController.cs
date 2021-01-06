@@ -24,14 +24,19 @@ namespace JooleOnlineShop.Controllers
         public ActionResult Login_Verify(string username, string password)
         {
             Services service = new Services();
-            Boolean isLogin = service.Login(username, password);
+            bool isLogin = service.Login(username, password);
+            ViewBag.Title = "Server Login";
+
             if (isLogin)
             {
-                List<User> users = service.GetUserList();
-                return View("UserList", users);
+                HttpContext.Session.Add("username", username);
+                return RedirectToAction("Search", "Search");
             }
-            return View("Login");
-
+            else
+            {
+                ViewBag.message = "Invalid Credentials! Please try again!";
+                return View("Login");
+            }
         }
 
         [HttpPost]
@@ -41,46 +46,17 @@ namespace JooleOnlineShop.Controllers
            
             if(image1 != null){
                 byte[] b = new byte[image1.ContentLength];
-                //ViewBag.data = b;
                 image1.InputStream.Read(b, 0, image1.ContentLength);
                 service.Submit_User(username1, emailid, password1, b);
             }
             else {
-                //ViewBag.data = "wkgebwkg";
                 service.Submit_User(username1, emailid, password1, null);
             }
-
-
-
-            /*int c = users.Count + 1;
-            User user = new User
-            {
-                Id = c,
-                Name = username1,
-                Email = emailid,
-                Password = password1
-            };
-            
-            users.Add(user);*/
-            List<User> users = service.GetUserList();
-            return View("UserList", users);
-            //return View("Login");
-        }
-
-
-
-        [HttpPost]
-        public ActionResult Login_Submmt(UserVM user) {
-            Services service = new Services();
-            Boolean isLogin = service.Login(user.Email, user.Password);
-            if (isLogin) {
-                return View("Login");
-            }
+            ViewBag.message = "User Successfully Added!";
             return View("Login");
         }
 
         public ActionResult UserList() {
-
             Services service = new Services();
             List<User> users = service.GetUserList();
             return View("UserList", users);
