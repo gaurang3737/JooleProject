@@ -1,12 +1,20 @@
-﻿@{ Layout = null;
+﻿@model IEnumerable<Joole.Service.Models.Category>
+@using Joole.Service.Models
+@{ Layout = null;
     ViewBag.Title = "Product Details"; }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joole - @ViewBag.Title</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    @Scripts.Render("~/bundles/modernizr")
+    <!--Styling-->
     <style>
         .flex-container {
             display: flex;
@@ -24,25 +32,163 @@
             text-align: left;
             padding-left: 10px;
         }
-        th{
-            width:40%;
+
+        th {
+            width: 40%;
+        }
+
+        header {
+            display: flex;
+            background-image: linear-gradient(#1565c0, white);
+        }
+
+        #image img {
+            width: 218px;
+            height: 119px;
+        }
+
+        #searchBar {
+            flex: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #logoutBtn {
+            flex: 2;
+        }
+
+        .dropdown select {
+            cursor: pointer;
+        }
+
+        .dropdown option {
+            color: black;
+            background-color: white;
+        }
+
+        .search {
+            width: 30%;
+            height: 30px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+            .search #srch {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 3px;
+            }
+
+        .butten {
+            cursor: pointer;
+        }
+
+        #logoutBtn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        #logoutBtn a {
+            color: black;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 
+    <!--Top Search Bar Scripts-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+    $(document).ready(function () {
+
+        $("#category_filter").change(function () {
+            console.log(this);
+            var categoryID = $(this).val();
+            $("#srch").val("");
+            $.get("@Url.Action("GetSubCateListByCatID", "Search")", { categoryId: categoryID }, BindData);
+            function BindData(Subcategories) {
+                console.log(Subcategories);
+                var datalist = $("#subcatList");
+                datalist.html("");
+                for (var i = 0; i < Subcategories.length; i++) {
+                    console.log(Subcategories[i].Name);
+                    var newRow = "<option data-id="+Subcategories[i].Id+">" + Subcategories[i].Name + "</option>";
+                    datalist.append(newRow);
+                }
+            }
+
+        })
+
+        $("#srcbtn").click(function () {
+            var categoryID = $("#category_filter").val();
+            var subcatName = $("#srch").val();
+            var subcategoryID = $("#subcatList option").filter(function () {
+                console.log(this);
+                return this.value == subcatName;
+            }).data("id");
+            if (categoryID == "") {
+                alert("Please select Category and Subcategory!")
+            }
+            else if (subcategoryID == null) {
+                alert("Please select Subcategory from list!")
+            }
+            else {
+                var url = "/Product/Product?categoryId=" + categoryID + "&subcategoryId=" + subcategoryID;
+                location.replace(url);
+            }
+        })
+
+    });
+    </script>
+
 </head>
 <body>
+    <div>
+                <header>
+                    <div id="image">
+                        <img src="https://i.ibb.co/QkYhFNX/joole.png" alt="Joole" />
+                    </div>
+                    <div id="searchBar">
+                        <div class="dropdown">
+                            <select id="category_filter" class="btn btn-primary">
+                                <option value="" selected hidden>Category</option>
+                                @foreach (Category categroy in Model)
+                                {
+                                    <option value="@categroy.Id "> @categroy.Name</option>
+                                }
+                            </select>
+                        </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 bg-primary" style="height:80px;text-align:center;background-image:linear-gradient(#1565c0,white);">
-                Top
-                @Html.ActionLink("Logout", "Logout", "Product")
-            </div>
-        </div>
+                        <div class="search">
+                            <input type="text" id="srch" name="srch" list="subcatList" />
 
+                            <datalist id="subcatList">
+                            </datalist>
+                        </div>
+
+                        <div class="butten">
+                            <button type="submit" id="srcbtn" class="btn btn-primary btn-sm">Search</button>
+                        </div>
+                    </div>
+
+                    <div id="logoutBtn">
+                        <img src="https://www.w3schools.com/howto/img_avatar2.png" class="avatar" />
+                        <input type="button" class="btn btn-danger btn-sm" value="Logout" onclick="location.href='@Url.Action("Logout", "Product")'" />
+                    </div>
+                </header>
     </div>
-
-
     <h2 style="color:dodgerblue;">Product Summary</h2>
     <hr>
 
@@ -112,20 +258,22 @@
                 </tr>
                 @foreach (List<string> item in (List<List<string>>)ViewBag.IsTechSpec)
                 {
-            <tr style="border-bottom: 1px inset lightgray;">
-                <th style="background-color:lightgray;">@item[0]</th>
-                @if (item[1].Split(',').Length == 2)
-                {
-                     <th style="background-color:lightgray; width:10%">Min</th><td style="width:50px">@item[1].Split(',')[0]</td>
-                     <th style="background-color:lightgray; width:10%">Max</th><td style="width:15px">@item[1].Split(',')[1]</td>
-                }
-                else
-                {
-                    <td>@item[1].Split(',')[0]</td>
-                }
+                    <tr style="border-bottom: 1px inset lightgray;">
+                        <th style="background-color:lightgray;">@item[0]</th>
+                        @if (item[1].Split(',').Length == 2)
+                        {
+                            <th style="background-color:lightgray; width:10%">Min</th>
+                            <td style="width:50px">@item[1].Split(',')[0]</td>
+                            <th style="background-color:lightgray; width:10%">Max</th>
+                            <td style="width:15px">@item[1].Split(',')[1]</td>
+                        }
+                        else
+                        {
+                            <td>@item[1].Split(',')[0]</td>
+                        }
 
 
-            </tr>
+                    </tr>
                 }
 
             </table>

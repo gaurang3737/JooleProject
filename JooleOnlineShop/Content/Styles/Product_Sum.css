@@ -43,6 +43,7 @@ div#head {
     height:7%;
     padding:10px;
 }
+
 .slider-row input{
     width: 20%;
     height:60%;
@@ -56,9 +57,7 @@ div#head {
 
 .toppane {
     width: 100%;
-    height: 100px;
     background-image: linear-gradient(#1565c0,white);
-    padding-top: 2%;
 }
 
 .card img{

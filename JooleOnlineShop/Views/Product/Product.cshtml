@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Joole.Service.Models.Category>
+@using Joole.Service.Models
+@{
     Layout = null;
 }
 @{ ViewBag.Title = "Product Summary"; }
@@ -19,18 +21,188 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
+
 
     <!--Applied Common CSS-->
     @Styles.Render("~/Content/Site.css")
     <!--Applied Specific Styling-->
     @Styles.Render("~/Content/Styles/Product_Sum.css")
+
+    <!--Compare functionality-->
+    <script type="text/javascript">
+        function Compare() {
+            var values = [];
+            $.each($("input[name='check_compare']:checked"), function () {
+                values.push($(this).val());
+            });
+            if (values.length < 2) {
+                alert("Select atleast 2 products for comparison!");
+            }
+            else {
+                var final_array = [];
+                var t = ["a", "b", "c"];
+                for (var i = 0; i < values.length; i++) {
+                    var temp = t[i] + "=" + values[i];
+                    final_array.push(temp);
+                }
+                var query = final_array.join('&');
+                var url = "/Product/CompareProducts?" + query;
+                location.replace(url);
+            }
+        }
+    </script>
+
+    <!--Top Search Bar Styling-->
+    <style>
+        header {
+            display: flex;
+            background-image: linear-gradient(#1565c0, white);
+        }
+
+        #image img {
+            width: 218px;
+            height: 119px;
+        }
+
+        #searchBar {
+            flex: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #logoutBtn {
+            flex: 2;
+        }
+
+        .dropdown select {
+            cursor: pointer;
+        }
+
+        .dropdown option {
+            color: black;
+            background-color: white;
+        }
+
+        .search {
+            width: 30%;
+            height: 30px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+            .search #srch {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 3px;
+            }
+
+        .butten {
+            cursor: pointer;
+        }
+
+        #logoutBtn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        #logoutBtn a {
+            color: black;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+
+    <!--Top Search Bar Scripts-->
+    <script>
+    $(document).ready(function () {
+
+        $("#category_filter").change(function () {
+            console.log(this);
+            var categoryID = $(this).val();
+            $("#srch").val("");
+            $.get("@Url.Action("GetSubCateListByCatID", "Search")", { categoryId: categoryID }, BindData);
+            function BindData(Subcategories) {
+                console.log(Subcategories);
+                var datalist = $("#subcatList");
+                datalist.html("");
+                for (var i = 0; i < Subcategories.length; i++) {
+                    console.log(Subcategories[i].Name);
+                    var newRow = "<option data-id="+Subcategories[i].Id+">" + Subcategories[i].Name + "</option>";
+                    datalist.append(newRow);
+                }
+            }
+
+        })
+
+        $("#srcbtn").click(function () {
+            var categoryID = $("#category_filter").val();
+            var subcatName = $("#srch").val();
+            var subcategoryID = $("#subcatList option").filter(function () {
+                console.log(this);
+                return this.value == subcatName;
+            }).data("id");
+            if (categoryID == "") {
+                alert("Please select Category and Subcategory!")
+            }
+            else if (subcategoryID == null) {
+                alert("Please select Subcategory from list!")
+            }
+            else {
+                var url = "/Product/Product?categoryId=" + categoryID + "&subcategoryId=" + subcategoryID;
+                location.replace(url);
+            }
+        })
+
+    });
+    </script>
 </head>
 <body>
     <div class="layer">
         <div class="toppane">
-            <center><h1>Search Here @Html.ActionLink("Logout", "Logout", "Product") </h1></center>
-            
+            <header>
+                <div id="image">
+                    <img src="https://i.ibb.co/QkYhFNX/joole.png" alt="Joole" />
+                </div>
+                <div id="searchBar">
+                    <div class="dropdown">
+                        <select id="category_filter" class="btn btn-primary">
+                            <option value="" selected hidden>Category</option>
+                            @foreach (Category categroy in Model)
+                            {
+                                <option value="@categroy.Id "> @categroy.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="search">
+                        <input type="text" id="srch" name="srch" list="subcatList" />
+
+                        <datalist id="subcatList">
+                        </datalist>
+                    </div>
+
+                    <div class="butten">
+                        <button type="submit" id="srcbtn" class="btn btn-primary btn-sm">Search</button>
+                    </div>
+                </div>
+
+                <div id="logoutBtn">
+                    <img src="https://www.w3schools.com/howto/img_avatar2.png" class="avatar" />
+                    <input type="button" class="btn btn-danger btn-sm" value="Logout" onclick="location.href='@Url.Action("Logout", "Product")'" />
+                </div>
+            </header>
         </div>
         <div class="leftpane">
             <div id="head">
@@ -78,9 +250,9 @@
                     @{var count = 0;}
                     @if (ViewBag.prod_data != null)
                     {
-                        foreach(var p in ViewBag.prod_data)
+                        foreach (var p in ViewBag.prod_data)
                         {
-                            <div class="card" style="width: 15rem; height: 30rem;">
+                            <div class="card" style="width: 15rem;">
                                 @if (p.Product_Image != null)
                                 {
                                     <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="200">
@@ -104,7 +276,14 @@
                                     <!--Link to Details-->
                                     <a href="/Product/ProductList?pid=@p.Product_ID" class="stretched-link"></a>
                                 </div>
-                           </div>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="check-@(p.Product_ID)">
+                                    <input type="checkbox" class="form-check-input" id="check-@(p.Product_ID)" name="check_compare" value="@(p.Product_ID)">Add to Compare
+                                </label>
+                                &nbsp;&nbsp;
+                                <a href="#" onclick="Compare(); return false;" class="btn btn-primary"> Compare </a>
+                            </div>
                             count = count + 1;
                         }
                     }
@@ -112,6 +291,7 @@
                     {
                         <p>No Products found!</p>
                     }
+
                 </div>
             </div>
 
