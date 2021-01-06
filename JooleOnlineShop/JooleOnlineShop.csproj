@@ -175,6 +175,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\UserList.cshtml" />
     <Content Include="Views\Product\ProductList.cshtml" />
+    <Content Include="Views\Product\CompareProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

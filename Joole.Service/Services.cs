@@ -17,12 +17,15 @@ namespace Joole.Service
         public static readonly JooleDBEntities context = new JooleDBEntities();
         readonly UnitOfWork uow = new UnitOfWork(context);
 
-        public Boolean Login(string username, string password) {
+        public Boolean Login(string username, string password)
+        {
 
             var dataset = uow.users.GetAll();
 
-            foreach (var item in dataset) {
-                if ((item.User_Name.Equals(username) || item.User_Email.Equals(username)) && item.User_Password.Equals(password)) {
+            foreach (var item in dataset)
+            {
+                if ((item.User_Name.Equals(username) || item.User_Email.Equals(username)) && item.User_Password.Equals(password))
+                {
                     return true;
                 }
             }
@@ -32,7 +35,7 @@ namespace Joole.Service
         public void Submit_User(string username, string email, string password, byte[] b)
         {
             var dataset = uow.users.GetAll();
-            var count = dataset.Count()+1;
+            var count = dataset.Count() + 1;
             tblUser user = new tblUser();
             user.User_ID = count;
             user.User_Name = username;
@@ -44,11 +47,13 @@ namespace Joole.Service
         }
 
 
-        public List<User> GetUserList() {
+        public List<User> GetUserList()
+        {
 
             var dataset = uow.users.GetAll();
             List<User> users = new List<User>();
-            foreach (var item in dataset) {
+            foreach (var item in dataset)
+            {
                 User user = new User();
                 user.Id = item.User_ID;
                 user.Name = item.User_Name;
@@ -56,19 +61,25 @@ namespace Joole.Service
                 user.Password = item.User_Password;
                 user.Image = item.User_Image;
                 users.Add(user);
-                
+
             }
             return users;
         }
 
-        public List<List<List<string>>> GetProductList()
+        public List<List<List<string>>> GetProductList(int pid)
         {
             var dataset = uow.products.GetAll();
             var dataset1 = uow.manufactures.GetAll();
-            var dataset2 = (from a in dataset join b in dataset1 on a.Manufacture_ID equals b.Manufacture_ID where a.Product_ID == 1
-            select new
-            { Product_name = a.Product_Name, Manufacture_name = b.Manufacture_Name, Series = a.Series, Model = a.Model
-            }).ToList();
+            var dataset2 = (from a in dataset
+                            join b in dataset1 on a.Manufacture_ID equals b.Manufacture_ID
+                            where a.Product_ID == pid
+                            select new
+                            {
+                                Product_name = a.Product_Name,
+                                Manufacture_name = b.Manufacture_Name,
+                                Series = a.Series,
+                                Model = a.Model
+                            }).ToList();
 
             var dataset3 = uow.propertyvalues.GetAll();
             var dataset4 = uow.properties.GetAll();
@@ -76,11 +87,14 @@ namespace Joole.Service
             var dataset5 = (from a in dataset
                             join b in dataset3 on a.Product_ID equals b.Product_ID
                             join c in dataset4 on b.Property_ID equals c.Property_ID
-                            where a.Product_ID == 1 //&& c.Property_ID == 10
+                            where a.Product_ID == pid //&& c.Property_ID == 10
                             select new
-                            { PropName = c.Property_Name, Type = c.IsType, Value = b.Value
+                            {
+                                PropName = c.Property_Name,
+                                Type = c.IsType,
+                                Value = b.Value
                             }).ToList();
-           
+
 
 
             List<List<List<string>>> result = new List<List<List<string>>>();
@@ -116,15 +130,11 @@ namespace Joole.Service
                     temp.Add(item.Value);
                     istechspec.Add(temp);
                 }
-                
+
             }
 
             result.Add(istypes);
             result.Add(istechspec);
-
-
-
-
 
             /*
             var dataset = uow.products.GetAll();
@@ -145,12 +155,89 @@ namespace Joole.Service
             return result;
         }
 
+        public List<List<List<string>>> GetCompareProducts(int pid)
+        {
+            var dataset = uow.products.GetAll();
+            var dataset1 = uow.manufactures.GetAll();
+            var dataset2 = (from a in dataset
+                            join b in dataset1 on a.Manufacture_ID equals b.Manufacture_ID
+                            where a.Product_ID == pid
+                            select new
+                            {
+                                Product_name = a.Product_Name,
+                                Product_image = a.Product_Image,
+                                Manufacture_name = b.Manufacture_Name,
+                                Series = a.Series,
+                                Model = a.Model
+                            }).ToList();
 
+            var dataset3 = uow.propertyvalues.GetAll();
+            var dataset4 = uow.properties.GetAll();
+
+            var dataset5 = (from a in dataset
+                            join b in dataset3 on a.Product_ID equals b.Product_ID
+                            join c in dataset4 on b.Property_ID equals c.Property_ID
+                            where a.Product_ID == pid //&& c.Property_ID == 10
+                            select new
+                            {
+                                PropName = c.Property_Name,
+                                Type = c.IsType,
+                                Value = b.Value
+                            }).ToList();
+
+
+
+            List<List<List<string>>> result = new List<List<List<string>>>();
+            List<List<string>> products = new List<List<string>>();
+            foreach (var item in dataset2)
+            {
+                List<string> temp = new List<String>();
+                temp.Add(item.Product_name);
+                temp.Add(Convert.ToBase64String(item.Product_image));
+                temp.Add(item.Manufacture_name);
+                temp.Add(item.Series);
+                temp.Add(item.Model);
+                products.Add(temp);
+            }
+
+            result.Add(products);
+
+            List<List<string>> istypes = new List<List<string>>();
+            List<List<string>> istechspec = new List<List<string>>();
+            foreach (var item in dataset5)
+            {
+                List<string> temp = new List<String>();
+                if ((bool)item.Type)
+                {
+                    //istypes.Add(1.ToString());
+                    temp.Add(item.PropName);
+                    temp.Add(item.Value);
+                    istypes.Add(temp);
+                }
+                else
+                {
+                    //istechspec.Add(0.ToString());
+                    temp.Add(item.PropName);
+                    temp.Add(item.Value);
+                    istechspec.Add(temp);
+                }
+
+            }
+
+            result.Add(istypes);
+            result.Add(istechspec);
+
+            
+            return result;
+        }
+
+
+
+
+        //public class JooleContext : JooleDBEntities {
+        //    public JooleContext() { 
+
+        //    }
+        //}
     }
-
-    //public class JooleContext : JooleDBEntities {
-    //    public JooleContext() { 
-
-    //    }
-    //}
 }
