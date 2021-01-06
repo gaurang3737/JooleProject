@@ -24,12 +24,13 @@ namespace JooleOnlineShop.Controllers
         public ActionResult Login_Verify(string username, string password)
         {
             Services service = new Services();
-            bool isLogin = service.Login(username, password);
+            (bool isLogin, byte[] img) = service.Login(username, password);
             ViewBag.Title = "Server Login";
 
             if (isLogin)
             {
                 HttpContext.Session.Add("username", username);
+                HttpContext.Session.Add("user_img", img);
                 return RedirectToAction("Search", "Search");
             }
             else

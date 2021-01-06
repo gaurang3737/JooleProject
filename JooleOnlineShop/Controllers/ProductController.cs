@@ -15,10 +15,12 @@ namespace JooleOnlineShop.Controllers
         [HttpGet]
         public ActionResult Product(string categoryId, string subcategoryId)
         {
-            if (this.Session["username"] == null)
+            if (HttpContext.Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
+
+            TempData["img"] = HttpContext.Session["user_img"];
 
             int sub_id = Int32.Parse(subcategoryId);
             int cat_id = Int32.Parse(categoryId);
@@ -37,12 +39,14 @@ namespace JooleOnlineShop.Controllers
         }
 
         //GET Product Details
+        [HttpGet]
         public ActionResult ProductList(int pid)
         {
-            if (this.Session["username"] == null)
+            if (HttpContext.Session["username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
+            TempData["img"] = HttpContext.Session["user_img"];
             Services service = new Services();
             List<List<List<string>>> productdetails = service.GetProductList(pid);
             ViewBag.Man = productdetails[0];
@@ -52,8 +56,14 @@ namespace JooleOnlineShop.Controllers
             return View("ProductList", categories);
         }
 
+        [HttpGet]
         public ActionResult CompareProducts(int a, int b, int c = -1)
         {
+            if (HttpContext.Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            TempData["img"] = HttpContext.Session["user_img"];
             Services service = new Services();
             if (c == -1)
             {
@@ -90,6 +100,7 @@ namespace JooleOnlineShop.Controllers
             List<Category> categories = service.GetCategoryList();//for top-search bar
             return View("CompareProducts", categories);
         }
+        
         public ActionResult Logout()
         {
             //Clearing Sessions

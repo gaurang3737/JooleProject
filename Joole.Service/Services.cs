@@ -17,7 +17,7 @@ namespace Joole.Service
         public static readonly JooleDBEntities context = new JooleDBEntities();
         readonly UnitOfWork uow = new UnitOfWork(context);
 
-        public Boolean Login(string username, string password)
+        public (bool,byte []) Login(string username, string password)
         {
 
             var dataset = uow.users.GetAll();
@@ -26,10 +26,10 @@ namespace Joole.Service
             {
                 if ((item.User_Name.Equals(username) || item.User_Email.Equals(username)) && item.User_Password.Equals(password))
                 {
-                    return true;
+                    return (true,item.User_Image);
                 }
             }
-            return false;
+            return (false,null);
         }
 
         public void Submit_User(string username, string email, string password, byte[] b)
@@ -45,7 +45,6 @@ namespace Joole.Service
             context.tblUsers.Add(user);
             context.SaveChanges();
         }
-
 
         public List<User> GetUserList()
         {

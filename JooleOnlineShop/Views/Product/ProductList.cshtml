@@ -184,7 +184,14 @@
                     </div>
 
                     <div id="logoutBtn">
-                        <img src="https://www.w3schools.com/howto/img_avatar2.png" class="avatar" />
+                        @if (TempData["img"] == null)
+                        {
+                            <img src="https://www.w3schools.com/howto/img_avatar2.png" class="avatar" />
+                        }
+                        else
+                        {
+                            <img src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String((byte [])TempData["img"]))" class="avatar" />
+                        }
                         <input type="button" class="btn btn-danger btn-sm" value="Logout" onclick="location.href='@Url.Action("Logout", "Product")'" />
                     </div>
                 </header>
