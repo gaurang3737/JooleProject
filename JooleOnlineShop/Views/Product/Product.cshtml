@@ -179,9 +179,9 @@
                     <div class="dropdown">
                         <select id="category_filter" class="btn btn-primary">
                             <option value="" selected hidden>Category</option>
-                            @foreach (Category categroy in Model)
+                            @foreach (Category category in Model)
                             {
-                                <option value="@categroy.Id "> @categroy.Name</option>
+                                <option value="@category.Id "> @category.Name</option>
                             }
                         </select>
                     </div>
