@@ -25,6 +25,14 @@ namespace Joole.DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tblCategory> tblCategories { get; set; }
+        public virtual DbSet<tblManufacture> tblManufactures { get; set; }
+        public virtual DbSet<tblProduct> tblProducts { get; set; }
+        public virtual DbSet<tblProperty> tblProperties { get; set; }
+        public virtual DbSet<tblSubCategory> tblSubCategories { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblPropertyValue> tblPropertyValues { get; set; }
+        public virtual DbSet<tblTechSpecFilter> tblTechSpecFilters { get; set; }
+        public virtual DbSet<tblTypeFilter> tblTypeFilters { get; set; }
     }
 }

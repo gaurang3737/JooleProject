@@ -3,27 +3,63 @@
 @{
     ViewBag.Title = "UserList";
 }
+<html>
+<body>
+    <h2>UserList</h2>
 
-<h2>UserList</h2>
-
-<table border="1" style="border-collapse : collapse">
-    <tr>
-        <th>User ID</th>
-        <th>User Name</th>
-        <th>User Password</th>
-        <th>User Email</th>
-    </tr>
-
-    @foreach (User user in Model)
-    {
+    <table border="1" style="border-collapse : collapse">
         <tr>
-            <td>@user.Id</td>
-            <td>@user.Name</td>
-            <td>@user.Password</td>
-            <td>@user.Email</td>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>User Password</th>
+            <th>User Email</th>
         </tr>
 
-    }
+        @foreach (User user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Password</td>
+                <td>@user.Email</td>
+            </tr>
+
+        }
 
 
-</table>
+    </table>
+
+    <table id="tblJson">
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>User Password</th>
+            <th>User Email</th>
+        </tr>
+    </table>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script>
+        $.get("JsonUserList", null, BindData);
+
+        function BindData(users) {
+            console.log(users);
+            console.log(this);
+            var table = $("#tblJson");
+            for (let i = 0; i < users.length; i++) {
+                var newRow = "<tr>" +
+                    "<td>" + users[i].Id + "</td>" +
+                    "<td>" + users[i].Name + "</td>" +
+                    "<td>" + users[i].Email + "</td>" +
+                    "<td>" + users[i].Password + "</td>" +
+                    "</tr>";
+                table.append(newRow);
+            }
+        }
+
+
+    </script>
+</body>
+</html>

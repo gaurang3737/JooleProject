@@ -4,8 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5ede7fb838234d7888e7cc1223b1e468" Name="Diagram1">
-        <EntityTypeShape EntityType="Joole_ProjectModel.tblUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="c6989edd595e48f8b7bc5f2799c1df42" Name="Diagram1">
+        <EntityTypeShape EntityType="JooleDB.tblCategory" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblManufacture" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblProduct" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblProperty" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblSubCategory" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblUser" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblPropertyValue" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblTechSpecFilter" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="JooleDB.tblTypeFilter" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="JooleDB.FK__tblSubCat__Categ__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblManufa__User___4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblProduc__Manuf__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblProduc__SubCa__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblProper__Produ__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblProper__Prope__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblTechSp__Prope__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblTypeFi__Prope__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblTechSp__SubCa__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="JooleDB.FK__tblTypeFi__SubCa__5EBF139D" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

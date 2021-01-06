@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Joole.DAL
+namespace Joole.Service.Models
 {
-    public class Product
+    public class Category
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

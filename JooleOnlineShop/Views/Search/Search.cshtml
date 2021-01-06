@@ -1,0 +1,173 @@
+﻿@model IEnumerable<Joole.Service.Models.Category>
+@using Joole.Service.Models
+@{
+    Layout = null;
+    ViewBag.Title = "Search";
+
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(#1565c0, white);
+        }
+
+        #searchBar {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        .container img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .title {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown select {
+            cursor: pointer;
+        }
+
+        .dropdown option {
+            color: black;
+            background-color: white;
+        }
+
+        .search {
+            width: 70%;
+            height: 30px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        @@media screen and (min-width: 980px) {
+            .search {
+                width: 55%;
+            }
+        }
+
+        .search #srch {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .butten {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="searchBar" class="container">
+        <img src="https://i.ibb.co/QkYhFNX/joole.png" alt="Joole" class="img-fluid w50">
+        <h1 class="title">Building Product SelSection Platform</h1>
+        <div class="form-group">
+            <div class="dropdown">
+                <select id="category_filter" class="btn btn-primary">
+                    <option value="" selected hidden>Category</option>
+                    @foreach (Category categroy in Model)
+                    {
+                        <option value="@categroy.Id "> @categroy.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="search">
+                <input type="text" id="srch" name="srch" list="subcatList" />
+
+                <datalist id="subcatList">
+                </datalist>
+            </div>
+
+            <div class="butten">
+                <button type="submit" id="srcbtn" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="appendPage" class="container">
+
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+    $(document).ready(function () {
+
+        $("#category_filter").change(function () {
+            console.log(this);
+            var categoryID = $(this).val();
+            $("#srch").val("");
+            $.get("@Url.Action("GetSubCateListByCatID", "Search")", { categoryId: categoryID }, BindData);
+            function BindData(Subcategories) {
+                console.log(Subcategories);
+                var datalist = $("#subcatList");
+                datalist.html("");
+                for (var i = 0; i < Subcategories.length; i++) {
+                    console.log(Subcategories[i].Name);
+                    var newRow = "<option data-id="+Subcategories[i].Id+">" + Subcategories[i].Name + "</option>";
+                    datalist.append(newRow);
+                }
+            }
+
+        })
+
+        $("#srcbtn").click(function () {
+            console.log(this);
+            var categoryID = $("#category_filter").val();
+            var subcatName = $("#srch").val();
+            var subcategoryID = $("#subcatList option").filter(function () {
+                console.log(this);
+                return this.value == subcatName;
+            }).data("id");
+
+            $.post("@Url.Action("Product","Product")",
+                {
+                    categoryId: categoryID,
+                    subcategoryId: subcategoryID
+                },
+
+                function (page, status) {
+                    alert("status :" + status);
+                    $("body").html(page);
+                }
+            );
+
+            console.log(categoryID);
+            console.log(subcategoryID);
+        })
+
+    });
+
+
+    </script>
+</body>
+</html>
+

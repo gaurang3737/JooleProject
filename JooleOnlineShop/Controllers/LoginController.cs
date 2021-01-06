@@ -19,19 +19,29 @@ namespace JooleOnlineShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login_Submmt(UserVM user) {
+        public ActionResult Login_Submmt(UserVM user)
+        {
             Services service = new Services();
             Boolean isLogin = service.Login(user.Email, user.Password);
-            if (isLogin) {
+            if (isLogin)
+            {
                 return View("Login");
             }
             return View("Login");
         }
 
-        public ActionResult UserList() {
+        public ActionResult UserList()
+        {
             Services service = new Services();
             List<User> users = service.GetUserList();
             return View("UserList", users);
+        }
+
+        public ActionResult JsonUserList()
+        {
+            Services service = new Services();
+            List<User> users = service.GetUserList();
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
     }
 }

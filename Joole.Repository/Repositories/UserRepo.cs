@@ -10,11 +10,12 @@ using Joole.DAL;
 namespace Joole.Repository.Repositories
 {
 
-    public interface IUserRepo : IRepsitory<tblUser> { 
-    
+    public interface IUserRepo : IRepository<tblUser>
+    {
+
     }
 
-    public class UserRepo : BaseRepositroy<tblUser>, IUserRepo 
+    public class UserRepo : BaseRepositroy<tblUser>, IUserRepo
     {
         public UserRepo(DbContext context) : base(context)
         {
