@@ -13,9 +13,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--For Jquery Slider-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+
     <!--Applied Common CSS-->
     @Styles.Render("~/Content/Site.css")
-    @Scripts.Render("~/bundles/modernizr")
     <!--Applied Specific Styling-->
     @Styles.Render("~/Content/Styles/Product_Sum.css")
 </head>
@@ -26,7 +33,43 @@
             
         </div>
         <div class="leftpane">
-            <center><h1>Filter Here</h1></center>
+            <div id="head">
+                Technical Specification
+            </div>
+            <form>
+                @{var s = 0;}
+                @foreach (var f in ViewBag.props_data[0])
+                {
+                    <p>@f.Split(':')[0]</p>
+                    <div class="slider-row">
+                        <input type="text" class="sliderValue-@(s)" data-index="0" value="@(s%2==0?20:10)" />
+                        <div id="slider-@(s)"></div>
+                        <input type="text" class="sliderValue-@(s)" data-index="1" value="@(s%2==0?90:80)" />
+                        <script>
+                            $(document).ready(function () {
+                                $("#slider-@(s)").slider({
+                                    min: 0,
+                                    max: 100,
+                                    step: 1,
+                                    values: [@(s%2==0?20:10), @(s%2==0?90:80)],
+                                    slide: function (event, ui) {
+                                            for (var i = 0; i < ui.values.length; ++i) {
+                                            $("input.sliderValue-@(s)[data-index=" + i + "]").val(ui.values[i]);
+                                            }
+                                        }
+                                });
+
+                                $("input.sliderValue-@(s)").change(function () {
+                                    var $this = $(this);
+                                    $("#slider-@(s)").slider("values", $this.data("index"), $this.val());
+                                });
+                            });
+                        </script>
+                    </div>
+                    s = s + 1;
+                }
+
+            </form>
         </div>
         <div class="middlepane">
             <div class="container">
