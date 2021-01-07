@@ -212,98 +212,108 @@
                 </div>
             </header>
         </div>
-        <div class="leftpane">
-            <div id="head">
-                Technical Specification
+
+        @if (ViewBag.message != null)
+        {
+            <div>
+                <h1>@ViewBag.message</h1>
             </div>
-            <form>
-                @{var s = 0;}
-                @foreach (var f in ViewBag.props_data[0])
-                {
-                    <p>@f.Split(':')[0]</p>
-                    <div class="slider-row">
-                        <input type="text" class="sliderValue-@(s)" data-index="0" value="@(s%2==0?20:10)" />
-                        <div id="slider-@(s)"></div>
-                        <input type="text" class="sliderValue-@(s)" data-index="1" value="@(s%2==0?90:80)" />
-                        <script>
-                            $(document).ready(function () {
-                                $("#slider-@(s)").slider({
-                                    min: 0,
-                                    max: 100,
-                                    step: 1,
-                                    values: [@(s%2==0?20:10), @(s%2==0?90:80)],
-                                    slide: function (event, ui) {
-                                            for (var i = 0; i < ui.values.length; ++i) {
-                                            $("input.sliderValue-@(s)[data-index=" + i + "]").val(ui.values[i]);
-                                            }
-                                        }
-                                });
-
-                                $("input.sliderValue-@(s)").change(function () {
-                                    var $this = $(this);
-                                    $("#slider-@(s)").slider("values", $this.data("index"), $this.val());
-                                });
-                            });
-                        </script>
-                    </div>
-                    s = s + 1;
-                }
-
-            </form>
-        </div>
-        <div class="middlepane">
-            <div class="container">
-                <h5>@ViewBag.cat_name > @ViewBag.sub_cat_name</h5>
-                <div class="card-columns">
-                    @{var count = 0;}
-                    @if (ViewBag.prod_data != null)
-                    {
-                        foreach (var p in ViewBag.prod_data)
-                        {
-                            <div class="card" style="width: 15rem;">
-                                @if (p.Product_Image != null)
-                                {
-                                    <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="200">
-                                }
-                                else
-                                {
-                                    <img class="card-img-top" src="#" alt="Card image cap" width="100">
-                                }
-
-                                <div class="card-body">
-                                    <div class="heading">
-                                        <p>@p.Product_Name</p>
-                                        <p>@ViewBag.man_data[count]</p>
-                                        <p>@p.Series</p>
-                                        <p>@p.Model</p>
-                                    </div>
-                                    <p>@ViewBag.props_data[count][0].Split(':')[1] @ViewBag.props_data[count][0].Split(':')[0]</p>
-                                    <p>@ViewBag.props_data[count][1].Split(':')[1].Split(',')[1] @ViewBag.props_data[count][1].Split(':')[0]</p>
-                                    <p>@ViewBag.props_data[count][2].Split(':')[1] @ViewBag.props_data[count][2].Split(':')[0]</p>
-                                    <p>@ViewBag.props_data[count][3].Split(':')[1] @ViewBag.props_data[count][3].Split(':')[0]</p>
-                                    <!--Link to Details-->
-                                    <a href="/Product/ProductList?pid=@p.Product_ID" class="stretched-link"></a>
-                                </div>
-                            </div>
-                            <div class="form-check-inline">
-                                <label class="form-check-label" for="check-@(p.Product_ID)">
-                                    <input type="checkbox" class="form-check-input" id="check-@(p.Product_ID)" name="check_compare" value="@(p.Product_ID)">Add to Compare
-                                </label>
-                                &nbsp;&nbsp;
-                                <a href="#" onclick="Compare(); return false;" class="btn btn-primary"> Compare </a>
-                            </div>
-                            count = count + 1;
-                        }
-                    }
-                    else
-                    {
-                        <p>No Products found!</p>
-                    }
-
+        }
+        else
+        {
+            <div class="leftpane">
+                <div id="head">
+                    Technical Specification
                 </div>
-            </div>
+                <form>
+                    @{var s = 0;}
+                    @foreach (var f in ViewBag.props_data[0])
+                    {
+                        <p>@f.Split(':')[0]</p>
+                        <div class="slider-row">
+                            <input type="text" class="sliderValue-@(s)" data-index="0" value="@(s % 2 == 0 ? 20 : 10)" />
+                            <div id="slider-@(s)"></div>
+                            <input type="text" class="sliderValue-@(s)" data-index="1" value="@(s % 2 == 0 ? 90 : 80)" />
+                            <script>
+                                $(document).ready(function () {
+                                    $("#slider-@(s)").slider({
+                                        min: 0,
+                                        max: 100,
+                                        step: 1,
+                                        values: [@(s % 2 == 0 ? 20 : 10), @(s % 2 == 0 ? 90 : 80)],
+                                        slide: function (event, ui) {
+                                                for (var i = 0; i < ui.values.length; ++i) {
+                                                $("input.sliderValue-@(s)[data-index=" + i + "]").val(ui.values[i]);
+                                                }
+                                            }
+                                    });
 
-        </div>
+                                    $("input.sliderValue-@(s)").change(function () {
+                                        var $this = $(this);
+                                        $("#slider-@(s)").slider("values", $this.data("index"), $this.val());
+                                    });
+                                });
+                            </script>
+                        </div>
+                        s = s + 1;
+                    }
+
+                </form>
+            </div>
+            <div class="middlepane">
+                <div class="container">
+                    <h5>@ViewBag.cat_name > @ViewBag.sub_cat_name</h5>
+                    <div class="card-columns">
+                        @{var count = 0;}
+                        @if (ViewBag.prod_data != null)
+                        {
+                            foreach (var p in ViewBag.prod_data)
+                            {
+                                <div class="card" style="width: 15rem;">
+                                    @if (p.Product_Image != null)
+                                    {
+                                        <img class="card-img-top" src="@String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(p.Product_Image))" alt="Card image cap" width="100" height="200">
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top" src="#" alt="Card image cap" width="100">
+                                    }
+
+                                    <div class="card-body">
+                                        <div class="heading">
+                                            <p>@p.Product_Name</p>
+                                            <p>@ViewBag.man_data[count]</p>
+                                            <p>@p.Series</p>
+                                            <p>@p.Model</p>
+                                        </div>
+                                        <p>@ViewBag.props_data[count][0].Split(':')[1] @ViewBag.props_data[count][0].Split(':')[0]</p>
+                                        <p>@ViewBag.props_data[count][1].Split(':')[1].Split(',')[1] @ViewBag.props_data[count][1].Split(':')[0]</p>
+                                        <p>@ViewBag.props_data[count][2].Split(':')[1] @ViewBag.props_data[count][2].Split(':')[0]</p>
+                                        <p>@ViewBag.props_data[count][3].Split(':')[1] @ViewBag.props_data[count][3].Split(':')[0]</p>
+                                        <!--Link to Details-->
+                                        <a href="/Product/ProductList?pid=@p.Product_ID" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label" for="check-@(p.Product_ID)">
+                                        <input type="checkbox" class="form-check-input" id="check-@(p.Product_ID)" name="check_compare" value="@(p.Product_ID)">Add to Compare
+                                    </label>
+                                    &nbsp;&nbsp;
+                                    <a href="#" onclick="Compare(); return false;" class="btn btn-primary"> Compare </a>
+                                </div>
+                                count = count + 1;
+                            }
+                        }
+                        else
+                        {
+                            <p>No Products found!</p>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        }
     </div>
 </body>
 </html>

@@ -31,25 +31,41 @@ namespace JooleOnlineShop.Controllers
                 categoryId = (string)HttpContext.Session["cat_id"];
                 subcategoryId = (string)HttpContext.Session["sub_cat_id"];
             }
-            TempData["img"] = HttpContext.Session["user_img"];
 
-            int sub_id = Int32.Parse(subcategoryId);
-            int cat_id = Int32.Parse(categoryId);
-            List<tblProduct> prodlist = new List<tblProduct>();
-            List<String> man_list = new List<string>();
-            List<List<String>> props_value_list = new List<List<String>>();
             Services serv = new Services();
             List<Category> categories = serv.GetCategoryList();//for top-search bar
-            ViewBag.cat_name = serv.GetCategoryName(cat_id);
-            ViewBag.sub_cat_name = serv.GetSubCategoryName(sub_id);
-            (prodlist, man_list, props_value_list) = serv.GetProductBySubCategoryID(sub_id);
-            ViewBag.prod_data = prodlist;
-            ViewBag.man_data = man_list;
-            ViewBag.props_data = props_value_list;
+            TempData["img"] = HttpContext.Session["user_img"];
 
-            //Setting session for compare page 
-            HttpContext.Session["cat_name"] = ViewBag.cat_name;
-            HttpContext.Session["sub_cat_name"] = ViewBag.sub_cat_name;
+            if (categoryId != null && subcategoryId != null)
+            {
+                int sub_id = Int32.Parse(subcategoryId);
+                int cat_id = Int32.Parse(categoryId);
+
+                if(cat_id > 1 || sub_id > 2)
+                {
+                    ViewBag.message = "No Data found!";
+                }
+
+                List<tblProduct> prodlist = new List<tblProduct>();
+                List<String> man_list = new List<string>();
+                List<List<String>> props_value_list = new List<List<String>>();
+
+
+                ViewBag.cat_name = serv.GetCategoryName(cat_id);
+                ViewBag.sub_cat_name = serv.GetSubCategoryName(sub_id);
+                (prodlist, man_list, props_value_list) = serv.GetProductBySubCategoryID(sub_id);
+                ViewBag.prod_data = prodlist;
+                ViewBag.man_data = man_list;
+                ViewBag.props_data = props_value_list;
+
+                //Setting session for compare page 
+                HttpContext.Session["cat_name"] = ViewBag.cat_name;
+                HttpContext.Session["sub_cat_name"] = ViewBag.sub_cat_name;
+            }
+            else
+            {
+                ViewBag.message = "No Data found!";
+            }
             return View("Product", categories);
         }
 
