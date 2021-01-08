@@ -38,7 +38,7 @@ namespace Joole.Repository.Repositories
                 var prop_values = Context.Set<tblPropertyValue>().Where(e => e.Product_ID == p.Product_ID).ToList();
                 var props_data = Context.Set<tblProperty>().ToList();
                 
-                //Joining 2 tables
+                //Joining 3 tables
                 var join_data = (from a in tech_spec_filter_data
                                  join b in prop_values on a.Property_ID equals b.Property_ID
                                  join c in props_data on b.Property_ID equals c.Property_ID

@@ -167,6 +167,13 @@
 
     });
     </script>
+
+    <!--Filter functionality-->
+    <script type="text/javascript">
+        function applyfilter() {
+            return false;
+        }
+    </script>
 </head>
 <body>
     <div class="layer">
@@ -227,20 +234,20 @@
                 </div>
                 <form>
                     @{var s = 0;}
-                    @foreach (var f in ViewBag.props_data[0])
+                    @foreach (var f in ViewBag.tech_spec_filter_data)
                     {
                         <p>@f.Split(':')[0]</p>
                         <div class="slider-row">
-                            <input type="text" class="sliderValue-@(s)" data-index="0" value="@(s % 2 == 0 ? 20 : 10)" />
+                            <input type="text" id="@(s)1" class="sliderValue-@(s)" data-index="0" value="@f.Split(':')[1]" />
                             <div id="slider-@(s)"></div>
-                            <input type="text" class="sliderValue-@(s)" data-index="1" value="@(s % 2 == 0 ? 90 : 80)" />
+                            <input type="text" id="@(s)2" class="sliderValue-@(s)" data-index="1" value="@f.Split(':')[2]" />
                             <script>
                                 $(document).ready(function () {
                                     $("#slider-@(s)").slider({
-                                        min: 0,
-                                        max: 100,
+                                        min: @f.Split(':')[1],
+                                        max: @f.Split(':')[2],
                                         step: 1,
-                                        values: [@(s % 2 == 0 ? 20 : 10), @(s % 2 == 0 ? 90 : 80)],
+                                        values: [@f.Split(':')[1], @f.Split(':')[2]],
                                         slide: function (event, ui) {
                                                 for (var i = 0; i < ui.values.length; ++i) {
                                                 $("input.sliderValue-@(s)[data-index=" + i + "]").val(ui.values[i]);
@@ -257,8 +264,10 @@
                         </div>
                         s = s + 1;
                     }
-
                 </form>
+                <div id="gobtn">
+                    <a href="#" onclick="applyfilter(); return false;" class="btn btn-primary"> Go </a>
+                </div>
             </div>
             <div class="middlepane">
                 <div class="container">
@@ -269,6 +278,9 @@
                         {
                             foreach (var p in ViewBag.prod_data)
                             {
+                                if (ViewBag.fstring.Split(',')[count] == "1")
+                                {
+
                                 <div class="card" style="width: 15rem;">
                                     @if (p.Product_Image != null)
                                     {
@@ -300,7 +312,7 @@
                                     </label>
                                     &nbsp;&nbsp;
                                     <a href="#" onclick="Compare(); return false;" class="btn btn-primary"> Compare </a>
-                                </div>
+                                </div>}
                                 count = count + 1;
                             }
                         }

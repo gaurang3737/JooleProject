@@ -19,6 +19,7 @@ namespace Joole.Repository
         public IManufactureRepo manufactures;
         public ICategoryRepo categories;
         public ISubcategoryRepo subcategories;
+        public ITechSpecFilter techspecfilter;
 
         public UnitOfWork(DbContext context)
         {
@@ -30,6 +31,7 @@ namespace Joole.Repository
             manufactures = new ManufactureRepo(context);
             categories = new CategoryRepo(context);
             subcategories = new SubcategoryRepo(context);
+            techspecfilter = new TechSpecFilterRepo(context);
         }
 
         public void SaveChanges() {

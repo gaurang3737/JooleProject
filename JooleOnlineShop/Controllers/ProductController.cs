@@ -11,9 +11,9 @@ namespace JooleOnlineShop.Controllers
 {
     public class ProductController : Controller
     {
-        //Get From Search
+        //Get for Product
         [HttpGet]
-        public ActionResult Product(string categoryId = "null", string subcategoryId = "null")
+        public ActionResult Product(string categoryId = "null", string subcategoryId = "null", string f = "1,0,1")
         {
             if (HttpContext.Session["username"] == null)
             {
@@ -50,7 +50,6 @@ namespace JooleOnlineShop.Controllers
                 List<String> man_list = new List<string>();
                 List<List<String>> props_value_list = new List<List<String>>();
 
-
                 ViewBag.cat_name = serv.GetCategoryName(cat_id);
                 ViewBag.sub_cat_name = serv.GetSubCategoryName(sub_id);
                 (prodlist, man_list, props_value_list) = serv.GetProductBySubCategoryID(sub_id);
@@ -58,6 +57,8 @@ namespace JooleOnlineShop.Controllers
                 ViewBag.man_data = man_list;
                 ViewBag.props_data = props_value_list;
 
+                ViewBag.tech_spec_filter_data = serv.GetTechSpecFilter(sub_id); //Getting Filter Data
+                ViewBag.fstring = f;
                 //Setting session for compare page 
                 HttpContext.Session["cat_name"] = ViewBag.cat_name;
                 HttpContext.Session["sub_cat_name"] = ViewBag.sub_cat_name;

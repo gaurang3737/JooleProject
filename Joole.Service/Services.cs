@@ -280,5 +280,10 @@ namespace Joole.Service
 
             return result;
         }
+
+        public List<String> GetTechSpecFilter(int sub_id)
+        {
+            return uow.techspecfilter.GetTechSpecFilters(sub_id);
+        }
     }
 }

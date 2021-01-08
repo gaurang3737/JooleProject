@@ -38,10 +38,13 @@ form p{
     margin:auto;
 }
 div#head {
-    padding: 0;
     border-bottom:1px black inset;
     height:7%;
     padding:10px;
+}
+
+div#gobtn {
+    padding: 10px;
 }
 
 .slider-row input{
