@@ -13,7 +13,7 @@ namespace JooleOnlineShop.Controllers
     {
         //Get for Product
         [HttpGet]
-        public ActionResult Product(string categoryId = "null", string subcategoryId = "null", string f = "1,0,1")
+        public ActionResult Product(string categoryId = "null", string subcategoryId = "null", string f = "1,1,1")
         {
             if (HttpContext.Session["username"] == null)
             {

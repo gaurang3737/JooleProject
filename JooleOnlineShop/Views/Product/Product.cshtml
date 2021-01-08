@@ -171,25 +171,22 @@
     <script type="text/javascript">
         function applyfilter(){
             var f = [];
-            var min;
-            var max;
-            for (var p = 0; p < @(ViewBag.prod_data.Count); p = p + 1) {
-                var p_data = (List<List<string>>)@(ViewBag.props_data);
-            }
-                /*
+            for (var p = 0; p < @(ViewBag.prod_data.Count); p = p + 1)
+            {
+                var p_data = @Html.Raw(Json.Encode(ViewBag.props_data));
                 var flag = true;
-                for (var s = 0; s <ViewBag.tech_spec_filter_data.Count; s = s + 1)
+                for (var s = 0; s < @ViewBag.tech_spec_filter_data.Count; s = s + 1)
                 {
-                    min = $("#" + s + "2").val();
-                    max = $("#" + s + "2").val();
+                    var min = parseFloat($("#" + s + "1").val());
+                    var max = parseFloat($("#" + s + "2").val());
                     var v;
-                    if (p_data[p][s].Split(':')[1].Split(',').length == 2) {
-                        v = p_data[p][s].Split(':')[1].Split(',')[1];
+                    if (p_data[p][s].split(':')[1].split(',').length == 2) {
+                        v = parseFloat(p_data[p][s].split(':')[1].split(',')[1]);
                     }
                     else {
-                        v = p_data[p][s].Split(':')[1];
+                        v = parseFloat(p_data[p][s].split(':')[1]);
                     }
-
+                    console.log(min, max, v);
                     if (v > max || v < min) {
                         f.push(0);
                         flag = false;
@@ -201,11 +198,9 @@
                 }
              }
             var final = f.join(',');
-            alert(min + ":" + max + ":" + v + ":" + final);
-            */
-            //var url = "/Product/Product?f=" + final;
-           // location.replace(url);
-        }
+            var url = "/Product/Product?f=" + final;
+            location.replace(url);
+            }
     </script>
 </head>
 <body>
@@ -350,7 +345,8 @@
                                 count = count + 1;
                             }
                         }
-                        else
+                        
+                        @if(ViewBag.fstring == "0,0,0")
                         {
                             <p>No Products found!</p>
                         }
