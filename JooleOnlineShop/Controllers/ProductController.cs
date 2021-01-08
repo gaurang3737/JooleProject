@@ -47,8 +47,8 @@ namespace JooleOnlineShop.Controllers
                 }
 
                 List<tblProduct> prodlist = new List<tblProduct>();
-                List<String> man_list = new List<string>();
-                List<List<String>> props_value_list = new List<List<String>>();
+                List<string> man_list = new List<string>();
+                List<List<string>> props_value_list = new List<List<string>>();
 
                 ViewBag.cat_name = serv.GetCategoryName(cat_id);
                 ViewBag.sub_cat_name = serv.GetSubCategoryName(sub_id);
